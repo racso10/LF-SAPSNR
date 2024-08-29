@@ -1,0 +1,5 @@
+9
+test/bedroom/
+test/bicycle/
+test/herbs/
+additional/dishes/

@@ -48,7 +48,7 @@ Use `python test.py -h` to get more helps.
 ## Training
 
 ```bash
-python train.py -d [Syn/Lytro] -imc 1 -i [your_datasets_path] -in 2 -out 7 -e 0 -b 128 -c 64 -lr 0.001 -g 2
+python train.py -d [Syn/Lytro] -imc 1 -i [your_datasets_path] -in 2 -out 7 -e 0 -b 128 -c 64 -lr 0.001
 ```
 
 Use `python train.py -h` to get more helps.

@@ -4,7 +4,6 @@ import os
 from einops import rearrange
 from argparse import ArgumentParser, ArgumentTypeError
 
-from initializers import weights_init_xavier
 from model import LF_SAPSNR
 from dataset import ASRLF_Dataset
 import utils
@@ -26,7 +25,7 @@ def train_main(dataset, is_multi_channel, img_path, view_n_in, view_n_out, extra
 
     utils.get_parameter_number(model)
 
-    model.apply(weights_init_xavier)
+    model.apply(utils.weights_init_xavier)
 
     model.cuda()
 

@@ -46,9 +46,9 @@ class Composite_Feature_Extraction(nn.Module):
     def forward(self, x):
         batch, channel, height_view, width_view, height, width = list(x.shape)
         x = self.sa_aspp(x)
-        x = x.permute(0, 2, 3, 1, 4, 5).reshape(batch * height_view * width_view, channel, height, width)
+        x = rearrange(x, 'b c u v h w -> (b u v) c h w')
         x = self.final_conv(x)
-        x = x.reshape(batch, height_view, width_view, self.out_channels, height, width).permute(0, 3, 1, 2, 4, 5)
+        x = rearrange(x, '(b u v) c h w -> b c u v h w', b=batch, u=height_view, v=width_view)
         return x
 
 
@@ -208,17 +208,16 @@ class SA_ASPP(nn.Module):
 
     def forward(self, x):
         batch, channel, height_view, width_view, height, width = list(x.shape)
-        x = x.permute(0, 2, 3, 1, 4, 5).reshape(batch * height_view * width_view, channel, height, width)
+        x = rearrange(x, 'b c u v h w -> (b u v) c h w')
         x_all = []
         x_all.append(self.s_d1_conv(x))
         x_all.append(self.s_d2_conv(x))
         x_all.append(self.s_d4_conv(x))
         x_all.append(self.s_d8_conv(x))
         x_all = self.s_fusion(torch.cat(x_all, dim=1))
-        x_all = x_all.reshape(batch, height_view, width_view, channel, height, width).permute(0, 4, 5, 3, 1, 2).reshape(
-            batch * height * width, channel, height_view, width_view)
+        x_all = rearrange(x_all, '(b u v) c h w -> (b h w) c u v', b=batch, u=height_view, v=width_view)
         x_all = self.a_conv(x_all)
-        x_all = x_all.reshape(batch, height, width, channel, height_view, width_view).permute(0, 3, 4, 5, 1, 2)
+        x_all = rearrange(x_all, '(b h w) c u v -> b c u v h w', b=batch, h=height, w=width)
         return x_all
 
 

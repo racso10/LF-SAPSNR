@@ -40,7 +40,7 @@ Note, since the preprocessing of **Stanford Datasets** is more complex, includin
 
 ```bash
 cd dcn && sh make.sh && cd ..
-python test.py -i [your_datasets_path] -m ../pretrain_model/ -in 2 -out 7 -e 0 -d [Stanf/HCI/Lytro] -dn [stanford/HCI/HCI_old/DLFD/30scenes/occlusions/reflective] -imc 0
+python test.py -i [your_datasets_path] -m ../pretrain_model/ -in 2 -out 7 -e 0 -d [Stanf/Syn/Lytro] -dn [stanford/HCI/HCI_old/DLFD/30scenes/occlusions/reflective] -imc 0
 ```
 
 Use `python test.py -h` to get more helps.
